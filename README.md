@@ -1,8 +1,8 @@
 # Pandoc Docker Container
 
-[Docker](https://www.docker.io/) container for the source distribution of [Pandoc](http://johnmacfarlane.net/pandoc), with Latex tools installed.
+[Docker](https://www.docker.io/) container for the source distribution of [Pandoc](http://johnmacfarlane.net/pandoc), with Latex tools installed. Forked from jagregory.
 
-    docker run jagregory/pandoc
+    docker run astralfrontier/pandoc
 
     pandoc [OPTIONS] [FILES]
     Input formats:  docbook, haddock, html, json, latex, markdown, markdown_github,
@@ -17,4 +17,4 @@
 
 A `/source` directory is created in the container, which can be mapped for use with relative file paths. Pandoc will always be run from the `/source` directory in the container.
 
-    docker run -v `pwd`:/source jagregory/pandoc -f markdown -t html5 myfile.md -o myfile.html
+    docker run -v `pwd`:/source astralfrontier/pandoc -f markdown -t html5 myfile.md -o myfile.html

@@ -1,13 +1,12 @@
-FROM haskell:8.0
-
-MAINTAINER James Gregory <james@jagregory.com>
+FROM ubuntu:bionic
 
 # install latex packages
 RUN apt-get update -y \
   && apt-get install -y -o Acquire::Retries=10 --no-install-recommends \
     texlive-latex-base \
-    texlive-xetex latex-xcolor \
-    texlive-math-extra \
+    texlive-latex-recommended \
+    texlive-xetex \
+    texlive-science \
     texlive-latex-extra \
     texlive-fonts-extra \
     texlive-bibtex-extra \
@@ -16,13 +15,13 @@ RUN apt-get update -y \
 
 # will ease up the update process
 # updating this env variable will trigger the automatic build of the Docker image
-ENV PANDOC_VERSION "1.19.2.1"
+ENV PANDOC_VERSION "2.9.2"
 
-# install pandoc
-RUN cabal update && cabal install pandoc-${PANDOC_VERSION}
+RUN apt-get install -y wget
+RUN wget https://github.com/jgm/pandoc/releases/download/$PANDOC_VERSION/pandoc-$PANDOC_VERSION-1-amd64.deb && dpkg -i pandoc-$PANDOC_VERSION-1-amd64.deb
 
 WORKDIR /source
 
-ENTRYPOINT ["/root/.cabal/bin/pandoc"]
+ENTRYPOINT ["/usr/bin/pandoc"]
 
 CMD ["--help"]
